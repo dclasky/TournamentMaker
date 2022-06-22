@@ -1,0 +1,71 @@
+﻿@model MvcTourney3.Models.Matches
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Matches</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Result" class="control-label"></label>
+                <input asp-for="Result" class="form-control" />
+                <span asp-validation-for="Result" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*for making dropdown menus that reference other tables, the entire next select tag*@
+                <label asp-for="Team1Id" class="control-label"></label>
+                @*this is an html attribute that directs the name variable input back to the BIND command in the Player controller, which bounces it to the Table column also called "TeamId"*@
+                <select name="Team1Id">
+                    @*team here is a C# variable that iterates through the viewbag*@
+                    @foreach(var team1 in ViewBag.Team)
+                    {
+                        @*this makes a dropdown menu of the items in ViewBag, each option has an ID which only the computer sees, and a name that the computer shows the user*@
+                        <option value="@team1.Id">@team1.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="Team1Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Team1W" class="control-label"></label>
+                <input asp-for="Team1W" class="form-control" />
+                <span asp-validation-for="Team1W" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*for making dropdown menus that reference other tables, the entire next select tag*@
+                <label asp-for="Team2Id" class="control-label"></label>
+                @*this is an html attribute that directs the name variable input back to the BIND command in the Player controller, which bounces it to the Table column also called "TeamId"*@
+                <select name="Team2Id">
+                    @*team here is a C# variable that iterates through the viewbag*@
+                    @foreach(var team2 in ViewBag.Team)
+                    {
+                        @*this makes a dropdown menu of the items in ViewBag, each option has an ID which only the computer sees, and a name that the computer shows the user*@
+                        <option value="@team2.Id">@team2.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="Team2Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Team2W" class="control-label"></label>
+                <input asp-for="Team2W" class="form-control" />
+                <span asp-validation-for="Team2W" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

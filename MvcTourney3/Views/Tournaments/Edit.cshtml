@@ -1,0 +1,47 @@
+﻿@model MvcTourney3.Models.Tournament
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Tournament</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Season" class="control-label"></label>
+                <input asp-for="Season" class="form-control" />
+                <span asp-validation-for="Season" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                @*for making dropdown menus that reference other tables, the entire next select tag, label is named after column in model*@
+                <label asp-for="GametitleId" class="control-label"></label>
+                <select name="GametitleId">
+                    @*viewbag is named in controller, var is named HERE*@
+                    @foreach(var title in ViewBag.GameTitles)
+                    {
+                        @*value = var.Id, var.Id == Model.Columnname, this is all in a ternary (if statement) var.other column name*@
+                        <!option value="@title.Id" @(title.Id == Model.GametitleId ?"selected":"")>@title.Title</!option>
+                    }
+                </select>
+                @*update the span asp-validation-for value*@
+                <span asp-validation-for="GametitleId" class="text-danger"></span>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
